@@ -1,0 +1,11 @@
+1) Change directory to local docker folder:
+cd Desktop/docker
+
+2) Build the docker image
+docker build -t hello-world .
+
+3) Run the docker image
+docker run -p 8080:80 hello-world
+
+4) Run the docker image with a local directory mounted to the container
+docker run -p 8080:80 -v /Users/D064809/Desktop/docker/src/:/var/www/html/ hello-world
