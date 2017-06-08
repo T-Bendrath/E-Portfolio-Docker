@@ -1,0 +1,38 @@
+Run any application (e.g. a PHP script) on a webserver:
+
+Docker should help us by deploying the application into a docker container.
+Keep in mind that you need a running apache and docker on your computer!
+
+
+Setting up the container:
+
+1) Create your application (ref to docker/src/index.php)
+
+2) Create a Dockerfile in which defines the configuration for your docker container (should be located in the docker main folder -> docker/Dockerfile)
+
+3) Take a look at hub.docker.com and find an appropriate image for your needs. Those images prevent that you have to start at the scratch. You basically build your application on top of an existing image.
+
+4) In this case, I searched for an official php image and used the tag '7.1-apache'
+
+5) Scroll down a bit to the instructions to set up this image for apache and follow the instructions
+
+6) You will also need an 'EXPOSE 80' statement in this case inside the Dockerfile. This allows this container to accept any incoming requests and let apache handle it for us.
+
+7) Your Dockerfile should look like this: docker/Dockerfile
+
+-------------------------------------------------------------------------------------
+
+Command prompt inputs to build/run the container:
+
+1) Change directory to local docker folder:
+cd Desktop/docker
+
+2) Build the docker image
+docker build -t hello-world .
+
+3) Run the docker image
+docker run -p 8080:80 hello-world
+You need an additional '-p hostport:containerport'. This means: When a request comes to the host (port:8080), it will be forwarded from port 8080 to the container port 80. 'EXPOSE 80' inside the Dockerfile lets the container accept requests from port 80.
+
+4) Run the docker image with a local directory mounted to the container
+docker run -p 8080:80 -v /Users/D064809/Desktop/docker/src/:/var/www/html/ hello-world
